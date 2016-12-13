@@ -1,0 +1,57 @@
+<!-- views/profile.ejs -->
+<!doctype html>
+<html>
+<head>
+	<title>My Profile</title>
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+	<style>
+		body 		{ word-wrap:break-word; }
+	</style>
+</head>
+<body>
+<% include partials/template/header.ejs %>
+<div class="container">
+
+	<div class="page-header text-center">
+		<h1><span class="fa fa-anchor"></span> Profile Page</h1>
+		<a href="/logout" class="btn btn-default btn-sm">Logout</a>
+	</div>
+
+	<div class="row">
+
+		<!-- LOCAL INFORMATION -->
+        <didv class="row">
+		<div class="col-sm-6">
+			<div class="well">
+				<h3><span class="fa fa-user"></span> Info</h3>
+
+					<p>
+						<span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                        <% for(i=0;i<4;i++) {%>
+                        <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
+                        <% }%><br>
+						<strong>email</strong>: <%= user.local.email %><br>
+						<strong>native language</strong>: <%= user.local.nativeLanguage %><br>
+						<strong>other language</strong>: <%= user.local.otherLanguage %>
+					</p>
+
+			</div>
+		</div>
+            <div class="col-sm-6">
+                <div class="well">
+                    <h3><span class="fa fa-edit"></span> Essay</h3>
+                        <textarea class="form-control" id="presentation" rows="5" placeholder="Write something about yourself..."></textarea>
+                    <br><a href="/logout" class="btn btn-default btn-sm pull-right">Edit</a><br>
+
+                </div>
+            </div>
+
+        </didv>
+
+	</div>
+    <script>document.getElementById("info").innerText = "text";</script>
+
+</div>
+</body>
+</html>
