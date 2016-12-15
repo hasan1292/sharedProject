@@ -2,9 +2,9 @@
 <!doctype html>
 <html>
 <head>
-	<title>My Profile</title>
-	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
-	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+    <title>My Profile</title>
+	<% include partials/template/head.ejs %>
+
 	<style>
 		body 		{ word-wrap:break-word; }
 	</style>
@@ -41,8 +41,17 @@
             <div class="col-sm-6">
                 <div class="well">
                     <h3><span class="fa fa-edit"></span> Essay</h3>
-                        <textarea class="form-control" id="presentation" rows="5" placeholder="Write something about yourself..."></textarea>
-                    <br><a href="/logout" class="btn btn-default btn-sm pull-right">Edit</a><br>
+
+                    <a id="init" onclick="dispEdit()"><span class="fa fa-plus"></span> Introduce yourself a bit...</a>
+
+                    <div id="edit" style="visibility: hidden">
+                        <form action="/profile" method="post">
+                            <textarea class="form-control" id="introduce" name="introduce" rows="5" placeholder="Write something about yourself..."></textarea>
+                            <br><button type="submit" class="btn btn-default btn-sm pull-right">Save</button>
+                            <a onclick="dispInit()" class="btn btn-default btn-sm pull-right">Cancel</a><br>
+                        </form>
+                    </div>
+                    <p id="saved" style="visibility:visible">Text : <%= user.local.introduce %></p>
 
                 </div>
             </div>
@@ -50,7 +59,20 @@
         </didv>
 
 	</div>
-    <script>document.getElementById("info").innerText = "text";</script>
+    <script>
+        function dispInit() {
+            document.getElementById("init").style.visibility = "visible"
+            document.getElementById("edit").style.visibility = "hidden"
+        }
+        function dispEdit() {
+            document.getElementById("init").style.visibility = "hidden"
+            document.getElementById("edit").style.visibility = "visible"
+        }
+        function dispSaved() {
+            document.getElementById("init").style.visibility = "hidden"
+            document.getElementById("edit").style.visibility = "visible"
+        }
+    </script>
 
 </div>
 </body>

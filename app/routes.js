@@ -1,4 +1,6 @@
 // app/routes.js
+var user = require('../app/models/user'); //i get the address of user model in the link you give, but in general it should be the user model address.
+
 module.exports = function(app, passport) {
 
 	// =====================================
@@ -52,6 +54,20 @@ module.exports = function(app, passport) {
 			user : req.user // get the user out of session and pass to template
 		});
 	});
+
+	//profile modification POST
+    app.post('/profile', isLoggedIn, function(req, res) {
+        console.log('request :' + req.body.introduce);
+        req.session.passport.user.introduce = 'mynewnickname';
+        user.update({_id: req.session.passport.user.id}, {
+            introduce: 'exem'
+        }, function(err, numberAffected, rawResponse) {
+            console.log('new profile update error');
+        });
+        res.render('profile.ejs', {
+            user : req.user // get the user out of session and pass to template
+        });
+    });
 
 	// =====================================
 	// LOGOUT ==============================

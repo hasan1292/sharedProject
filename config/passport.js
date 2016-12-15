@@ -66,6 +66,7 @@ module.exports = function(passport) {
                 newUser.local.password = newUser.generateHash(password); // use the generateHash function in our user model
                 newUser.local.nativeLanguage = req.body.nativeLanguage;
                 newUser.local.otherLanguage = req.body.otherLanguage;
+                newUser.local.introduce = req.body.introduce;
 				// save the user
                 newUser.save(function(err) {
                     if (err)
@@ -88,7 +89,6 @@ module.exports = function(passport) {
         // by default, local strategy uses username and password, we will override with email
         usernameField : 'email',
         passwordField : 'password',
-
         passReqToCallback : true // allows us to pass back the entire request to the callback
     },
     function(req, email, password, done) { // callback with email and password from our form

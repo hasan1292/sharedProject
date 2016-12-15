@@ -4,13 +4,9 @@
     header          {background-color: #246AAD;}
     .navigation       { color: #DDDDDD;}
     .branding {padding-left:40px;padding-top:0px; padding-bottom: 0px;}
-
-    .nav>li>a {
-        color: #fff;
-    }
-    .nav-tabs > li > a:hover{
-        color:#0d3340;
-    }
+    .nav>li>a {color: #fff;}
+    .nav-tabs > li > a:hover{color:#0d3340;}
+    .icon-bar {background-color: white; }
 </style>
 </head>
 <header>
@@ -24,15 +20,36 @@
     </section><!-- layout -->
   </div><!-- hero -->
 
-  <div class="navigation">
-    <section class="layout">
-      <ul class="nav nav-tabs">
-        <li role="presentation"><a href="#">Home</a></li>
-        <li role="presentation"><a href="#">Ask for Help</a></li>
-        <li role="presentation"><a href="#">My Posts</a></li>
-        <li class="navbar-right active" role="presentation"><a href="/profile">My Profile</a></li>
-      </ul>
+    <nav class="navigation">
+        <div class="conainer-fluid">
+            <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            </div>
+            <div class="collapse navbar-collapse" id="myNavbar">
+                <ul class="nav nav-tabs head-menu">
+                  <li role="presentation"><a href="#">Home</a></li>
+                  <li role="presentation"><a href="#">Ask for Help</a></li>
+                  <li role="presentation"><a href="#">My Posts</a></li>
+                  <li class="navbar-right active" role="presentation"><a href="/profile">My Profile</a></li>
+                </ul>
+            </div>
+        </div><!-- layout -->
+    </nav>
+    <script>
+        //Stack menu when collapsed
+        $('#myNavbar').on('show.bs.collapse', function() {
+            $('.nav-tabs').addClass('nav-stacked');
+        });
 
-    </section><!-- layout -->
-  </div><!-- navigation -->
+        //Unstack menu when not collapsed
+        $('#myNavbar').on('hide.bs.collapse', function() {
+            $('.nav-tabs').removeClass('nav-stacked');
+        });
+    </script>
+
+
 </header>

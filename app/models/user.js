@@ -11,8 +11,7 @@ var userSchema = mongoose.Schema({
         password     : String,
         nativeLanguage : String,
         otherLanguage : String,
-        presentation : String
-
+        introduce : String
     }
 
 });
