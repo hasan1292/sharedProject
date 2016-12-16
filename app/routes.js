@@ -55,18 +55,22 @@ module.exports = function(app, passport) {
 		});
 	});
 
-	//profile modification POST
-    app.post('/profile', isLoggedIn, function(req, res) {
-        console.log('request :' + req.body.introduce);
-        req.session.passport.user.introduce = 'mynewnickname';
-        user.update({_id: req.session.passport.user.id}, {
-            introduce: 'exem'
-        }, function(err, numberAffected, rawResponse) {
-            console.log('new profile update error');
+
+
+    //profile modification POST
+    app.post('/modifyIntroduce', isLoggedIn, function(req, res) {
+        user.findOne({email: req.user.email}, function (err, intro) {
+            if (intro == null) {
+            } else {
+                intro.introduce = req.body.introduce;
+                intro.save(function (err, updatedObject) {
+                    if (err)
+                        console.log(err);
+                });
+            }
+
         });
-        res.render('profile.ejs', {
-            user : req.user // get the user out of session and pass to template
-        });
+        res.redirect('/profile#init');
     });
 
 	// =====================================

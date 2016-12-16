@@ -22,39 +22,55 @@
 
 		<!-- LOCAL INFORMATION -->
         <didv class="row">
-		<div class="col-sm-6">
-			<div class="well">
-				<h3><span class="fa fa-user"></span> Info</h3>
+            <div class="col-sm-6">
+                <div class="well">
+                    <h3><span class="fa fa-user"></span> Info</h3>
 
-					<p>
-						<span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                        <% for(i=0;i<4;i++) {%>
-                        <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
-                        <% }%><br>
-						<strong>email</strong>: <%= user.local.email %><br>
-						<strong>native language</strong>: <%= user.local.nativeLanguage %><br>
-						<strong>other language</strong>: <%= user.local.otherLanguage %>
-					</p>
+                        <p>
+                            <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                            <% for(i=0;i<4;i++) {%>
+                            <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
+                            <% }%><br>
+                            <strong>email</strong>: <%= user.email %><br>
+                            <strong>native language</strong>: <%= user.nativeLanguage %><br>
+                            <strong>other language</strong>: <%= user.otherLanguage %><br>
+                            <strong>Score</strong>: <%= user.score_nb %><br>
+                            <strong>Submited translations</strong>: <%= user.translations_nb %><br>
+                            <strong>Reviewed translations</strong>: <%= user.reviews_nb %><br>
+                            <strong>Profile created on</strong>: <%= user.profile_creation_date %><br>
+                        </p>
 
-			</div>
-		</div>
+                </div>
+            </div>
+
+
+
             <div class="col-sm-6">
                 <div class="well">
                     <h3><span class="fa fa-edit"></span> Essay</h3>
 
                     <a id="init" onclick="dispEdit()"><span class="fa fa-plus"></span> Introduce yourself a bit...</a>
-
-                    <div id="edit" style="visibility: hidden">
-                        <form action="/profile" method="post">
-                            <textarea class="form-control" id="introduce" name="introduce" rows="5" placeholder="Write something about yourself..."></textarea>
-                            <br><button type="submit" class="btn btn-default btn-sm pull-right">Save</button>
-                            <a onclick="dispInit()" class="btn btn-default btn-sm pull-right">Cancel</a><br>
+                    <div id="saved" style="visibility:hidden">
+                        <form action="/modifyIntroduce" method="post">
+                            <div>Text : <%= user.introduce %></div>
+                            <div name="introduce"></div>
+                            <button type="submit" class="btn btn-default btn-sm pull-right">Erase</button>
                         </form>
                     </div>
-                    <p id="saved" style="visibility:visible">Text : <%= user.local.introduce %></p>
+                    <div id="edit" style="visibility:hidden">
+                        <form action="/modifyIntroduce" method="post">
+                            <textarea class="form-control" id="introduce" name="introduce" rows="5" placeholder="Write something about yourself..."></textarea><br>
+                            <a onclick="dispInit()" class="btn btn-default btn-sm pull-right">Cancel</a>
+                            <button type="submit" class="btn btn-default btn-sm pull-right">Save</button><br>
+                        </form>
+                    </div>
+
 
                 </div>
             </div>
+
+
+
 
         </didv>
 
@@ -63,16 +79,24 @@
         function dispInit() {
             document.getElementById("init").style.visibility = "visible"
             document.getElementById("edit").style.visibility = "hidden"
+            document.getElementById("saved").style.visibility = "hidden"
         }
         function dispEdit() {
             document.getElementById("init").style.visibility = "hidden"
             document.getElementById("edit").style.visibility = "visible"
+            document.getElementById("saved").style.visibility = "hidden"
         }
         function dispSaved() {
             document.getElementById("init").style.visibility = "hidden"
-            document.getElementById("edit").style.visibility = "visible"
+            document.getElementById("edit").style.visibility = "hidden"
+            document.getElementById("saved").style.visibility = "visible"
         }
     </script>
+    <% if(user.introduce == null) { %>
+    <script>dispInit()</script>
+    <% } else { %>
+    <script>dispSaved()</script>
+    <% } %>
 
 </div>
 </body>
