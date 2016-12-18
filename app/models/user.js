@@ -24,6 +24,7 @@ var userSchema = mongoose.Schema({
         password     : String,
         nativeLanguage : String,
         otherLanguage : String,
+        picture : { data: Buffer, contentType: String },
         introduce : String,
         profile_creation_date : {type: Date, default: Date.now},
         score_nb : { type: Number, default: 0 },

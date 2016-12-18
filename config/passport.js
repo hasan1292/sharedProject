@@ -5,6 +5,7 @@ var LocalStrategy   = require('passport-local').Strategy;
 
 // load up the user model
 var User       		= require('../app/models/user');
+var fs              = require('fs');
 
 // expose this function to our app using module.exports
 module.exports = function(passport) {
@@ -68,6 +69,12 @@ module.exports = function(passport) {
                 newUser.otherLanguage = req.body.otherLanguage;
                 newUser.introduce = req.body.introduce;
                 newUser.score = 0;
+
+                var imgPath = __dirname + '/../public/images/logo.png';
+
+                newUser.picture.data = fs.readFileSync(imgPath);
+                newUser.picture.contentType = 'image/png';
+
 				// save the user
                 newUser.save(function(err) {
                     if (err)
