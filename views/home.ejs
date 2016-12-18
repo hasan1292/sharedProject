@@ -1,0 +1,44 @@
+<!-- views/profile.ejs -->
+<!doctype html>
+<html>
+<head>
+    <title>My Home</title>
+    <% include partials/template/head.ejs %>
+
+    <style>
+        body 		{ word-wrap:break-word; }
+    </style>
+</head>
+<body>
+<% include partials/template/header.ejs %>
+<div class="container">
+
+    <div class="page-header text-left">
+        <h1><span class="fa fa-anchor"></span>Welcome <%= title %></h1>
+    </div>
+
+    <p>______________________________________________________________________________________________________________________________________________</p>
+    <% userPosts.forEach(function(item){ %>
+    <div class="row">
+
+
+        <div class="col-md-15 portfolio-item">
+            <a href="#">
+                <!--<img class="img-responsive" src="http://placehold.it/700x400" alt="">-->
+            </a>
+            <h3>
+                <a href=<%= item.PostDomain %>><%= item.PostTitle %></a>
+            </h3>
+            <p><b>Post Language: </b><%= item.PostLanguage %></p>
+            <p><b>Target Language: </b><%= item.TargetLanguage %></p>
+            <p><b>Post Creator: </b><%= item.PostCreator %></p>
+            <p>______________________________________________________________________________________________________________________________________________</p>
+        </div>
+    </div>
+    <% }); %>
+
+
+
+</div>
+</body>
+</html>
