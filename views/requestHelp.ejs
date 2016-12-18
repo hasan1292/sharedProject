@@ -1,0 +1,67 @@
+<!-- views/profile.ejs -->
+<!doctype html>
+<html>
+<head>
+    <title>My Profile</title>
+    <% include partials/template/head.ejs %>
+
+    <style>
+        body 		{ word-wrap:break-word; }
+    </style>
+</head>
+<body>
+<% include partials/template/header.ejs %>
+<div class="container">
+
+    <div class="page-header text-left">
+        <h1><span class="fa fa-anchor"></span>Request Help</h1>
+    </div>
+
+    <div class="container">
+        <form role="form" action="/naya2" method="POST">
+            <div class="form-group">
+                <label for="text">Title</label>
+                <input type="text" class="form-control" name="title" placeholder="Enter Title">
+            </div>
+
+            <div class="form-group">
+                <label for="text">Post Language:</label>
+                <select class="form-control" name="postLanguage" placeholder="Enter Target language">
+                    <option>English</option>
+                    <option>中文</option>
+                    <option>Français</option>
+                    <option>Español</option>
+                    <option>اُردُو‎</option>
+                </select>
+
+            </div>
+
+            <div class="form-group">
+                <label for="text">Target Language:</label>
+                <select class="form-control" name="targetLanguage" placeholder="Enter Target language">
+                    <option>English</option>
+                    <option>中文</option>
+                    <option>Français</option>
+                    <option>Español</option>
+                    <option>اُردُو‎</option>
+                </select>
+
+            </div>
+
+            <div class="form-group">
+                <label for="text">Description:</label>
+
+                <textarea rows="5" cols="20" class="form-control" name="description" placeholder="Enter Description"></textarea>
+            </div>
+
+
+            <button type="submit" class="btn btn-default">Submit</button>
+        </form>
+    </div>
+
+
+
+
+</div>
+</body>
+</html>

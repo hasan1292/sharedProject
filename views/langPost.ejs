@@ -1,0 +1,102 @@
+<!-- views/profile.ejs -->
+<!doctype html>
+<html>
+<head>
+    <script src="http://code.jquery.com/jquery-1.6.2.min.js"></script>
+    <script type="text/javascript">
+        $(function(){
+            $('#select_link').click(function(e){
+                e.preventDefault();
+                console.log('select_link clicked');
+
+                var data = {};
+                data.title = <% postData.PostTitle %>;
+                data.message = "kanjairs";
+
+                $.ajax({
+                    type: 'POST',
+                    data: JSON.stringify(data),
+                    contentType: 'application/json',
+                    url: 'http://localhost:3000/endpoint',
+                    success: function(data) {
+
+                    }
+                });
+
+            });
+        });
+    </script>
+    <title>Post</title>
+    <% include partials/template/head.ejs %>
+
+    <style>
+        body 		{ word-wrap:break-word; }
+    </style>
+</head>
+<body>
+<% include partials/template/header.ejs %>
+<div class="container">
+
+    <div class="page-header text-left">
+        <h1><span class="fa fa-anchor"></span>Welcome <%= postData.PostTitle %></h1>
+    </div>
+
+    <div class="t3">
+
+        <table class="t3">
+
+            <tr><td class ="t1" valign="centre"><b>Post Language:   </b></td><td class ="t2"><%= postData.PostLanguage %></td></tr>
+
+            <tr><td class ="t1" valign="centre"><b>Target Language:  </b></td><td class ="t2" ><%= postData.TargetLanguage %></td></tr>
+
+            <tr><td class ="t1" valign="centre"><b>Author:  </b></td><td class ="t2" ><%= postData.PostCreator %></td></tr>
+
+            <tr><td class ="t1" valign="centre"><b>Post:   </b></td><td class ="t2" ><%= postData.Description %></td></tr>
+
+        </table>
+
+        <p>_________________________________________________________________________________________________________________________________________________________________</p>
+    </div>
+
+
+  <% postData.Comments.forEach(function(item){ %>
+    <div class="row">
+
+
+        <div class="col-md-15 portfolio-item">
+            <p><b>Commentator: </b><%= item.Commentator %></p>
+            <table class="t3">
+
+                <tr><td class ="t1" valign="centre"><b>Score:   </b></td>
+                    <td class ="t2"><%= item.Count %></td>
+                    <td class ="t2"><button type="submit" id="select_link">Upvote</button></td>
+                    <td class ="t2"><form role="form" action="/decrement" method="POST">
+
+                            <button type="submit" class="btn btn-default">Downvote</button>
+                        </form></td>
+                </tr>
+            </table>
+            <p><b>Comment:  </b><%= item.Comment %></p>
+            <p>______________________________________________________________________________________________________________________________________________</p>
+        </div>
+    </div>
+    <% }); %>
+
+    <div class="container">
+        <form role="form" action="/naya3" method="POST">
+
+            <div class="form-group">
+                <label for="text" name="labelText">Your Comment:</label>
+
+                <textarea rows="5" cols="20" class="form-control" name="comment" placeholder="Please enter your comment!"></textarea>
+            </div>
+
+
+            <button type="submit" class="btn btn-default">Reply</button>
+        </form>
+    </div>
+
+
+</div>
+</body>
+</html>

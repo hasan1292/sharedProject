@@ -12,6 +12,7 @@ var session = require('express-session');
 var configDB = require('./config/database.js');
 //var index = require('./routes/index');
 //var users = require('./routes/users');
+var hasanRoutes = require('./routes/hasanRoutes');
 var app = express();
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -38,6 +39,10 @@ app.use(flash()); // use connect-flash for flash messages stored in session
 
 // routes ======================================================================
 require('./app/routes.js')(app, passport); // load our routes and pass in our app and fully configured passport
+
+
+app.use('/', hasanRoutes);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
