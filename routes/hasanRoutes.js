@@ -35,6 +35,20 @@ var votes = new Schema({
 
 var Votes = mongoose.model('votes',votes);
 
+var userInfo = new Schema({
+    email        : String,
+    password     : String,
+    nativeLanguage : String,
+    otherLanguage : String,
+    introduce : String,
+    profile_creation_date : {type: Date, default: Date.now},
+    score_nb : { type: Number, default: 0 },
+    translations_nb : { type: Number, default: 0 },
+    reviews_nb : { type: Number, default: 0 }
+});
+
+var UserInfo = mongoose.model('user',userInfo);
+
 /* GET users listing. */
 
 
@@ -243,8 +257,47 @@ router.post('/decrement', function(req, res){
             }
     });
 
+});
+
+//myPosts route
+router.get('/myPosts', function(req, res, next) {
+    var user = req.user.email;
+
+    var documents = []
+
+    UserPost.find({},function(err,docs){
+        if(err) throw err;
+        else{
+
+            docs.forEach(function(item) {
+                if(item.PostCreator == user)
+                    documents.push(item);
+            });
+
+            res.render('myPosts', {
+                title: user,
+                userPosts: documents
+            });
+        }
+    });
 
 
+});
+
+//for visiting profile of particular user.
+router.get('/userProfile/:pdid',function(req,res){
+    var a =  req.params.pdid;
+    //var a = new mongoose.Types.ObjectId('5858d1811d1cda8403d6e4c8');
+
+    UserInfo.findOne({email:a},function(err,movies){
+        // UserPost.findOne({_id:a},function(err,movies){
+
+        console.log(movies);
+        res.render('userProfile', {
+            user: movies
+        });
+
+    });
 
 });
 

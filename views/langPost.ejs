@@ -25,7 +25,7 @@
 
             <tr><td class ="t1" valign="centre"><b>Target Language:  </b></td><td class ="t2" ><%= postData.TargetLanguage %></td></tr>
 
-            <tr><td class ="t1" valign="centre"><b>Author:  </b></td><td class ="t2" ><%= postData.PostCreator %></td></tr>
+            <tr><td class ="t1" valign="centre"><b>Author:  </b></td><td class ="t2" ><a href="/userProfile/<%= postData.PostCreator %>"><%= postData.PostCreator %></a></td></tr>
 
             <tr><td class ="t1" valign="centre"><b>Post:   </b></td><td class ="t2" ><%= postData.Description %></td></tr>
 
@@ -40,7 +40,7 @@
 
 
         <div class="col-md-15 portfolio-item">
-            <p><b>Commentator: </b><%= item.Commentator %></p>
+            <p><b>Commentator: </b><a href="/userProfile/<%= item.Commentator %>"><%= item.Commentator %></a></p>
             <table class="t3">
 
                 <tr><td class ="t1" valign="centre"><b>Score:   </b></td>
