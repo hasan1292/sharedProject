@@ -41,6 +41,7 @@ var userInfo = new Schema({
     nativeLanguage : String,
     otherLanguage : String,
     introduce : String,
+    credits: Number,
     profile_creation_date : {type: Date, default: Date.now},
     score_nb : { type: Number, default: 0 },
     translations_nb : { type: Number, default: 0 },
@@ -78,26 +79,45 @@ router.get('/requestHelp', function(req, res, next) {
 //post method for the saving of requestHelp
 router.post('/naya2',function(req,res){
 
-    var h = UserPost({
-        PostCreator: req.user.email,
-        PostTitle: req.body.title,
-        PostLanguage: req.body.postLanguage,
-        TargetLanguage: req.body.targetLanguage,
-        Description: req.body.description,
-        PostDomain: slugify(req.body.title)
+    UserInfo.findOne({email:req.user.email},function(err,docs) {
+
+        if(docs.credits <= 0){
+            res.render('sorry', { });
+        }
+        else{
+
+        var h = UserPost({
+            PostCreator: req.user.email,
+            PostTitle: req.body.title,
+            PostLanguage: req.body.postLanguage,
+            TargetLanguage: req.body.targetLanguage,
+            Description: req.body.description,
+            PostDomain: slugify(req.body.title)
+        });
+
+        UserInfo.update(
+            {'email': req.user.email},
+            {$inc: {'translations_nb': 1, 'credits': -1}},
+            function (err, numAfected) {
+                console.log(numAfected);
+            }
+        );
+
+
+        h.save(function (err) {
+            if (err) throw err;
+
+            else {
+                console.log('Project created!');
+                // res.render('success', {
+                //  title: 'Success'
+                //});
+                res.redirect('/myPosts');
+            }
+        });
+
+        }
     });
-
-    h.save(function(err){
-        if (err) throw err;
-
-        else{ console.log('Project created!');
-            // res.render('success', {
-            //  title: 'Success'
-            //});
-            res.redirect('/home');}
-    });
-
-
 });
 
 
@@ -136,6 +156,14 @@ router.post('/naya3',function(req,res){
             //console.log(docs);
 
             docs.Comments.push(Comment);
+
+            UserInfo.update(
+                {'email':req.user.email},
+                {$inc: {'reviews_nb':1}},
+                function (err, numAfected) {
+                    console.log(numAfected);
+                }
+            );
 
             docs.save(function (err, updatedObject) {
                 if (err)
@@ -197,6 +225,18 @@ router.post('/increment', function(req, res){
 
             UserPost.findOne({'Comments._id' :req.body.id},function(err,docs) {
 
+                docs.Comments.forEach(function (items) {
+                   if(items._id == req.body.id){
+                       UserInfo.update(
+                           {'email':items.Commentator},
+                           {$inc: {'score_nb':1,'credits':1}},
+                           function (err, numAfected) {
+                               console.log(numAfected);
+                           }
+                       );
+                   }
+                });
+
 
                 UserPost.update(
                     {'Comments._id':req.body.id},
@@ -244,6 +284,18 @@ router.post('/decrement', function(req, res){
 
                 UserPost.findOne({'Comments._id' :req.body.id},function(err,docs) {
 
+
+                    docs.Comments.forEach(function (items) {
+                        if(items._id == req.body.id){
+                            UserInfo.update(
+                                {'email':items.Commentator},
+                                {$inc: {'score_nb':-1,'credits':-1}},
+                                function (err, numAfected) {
+                                    console.log(numAfected);
+                                }
+                            );
+                        }
+                    });
 
                     UserPost.update(
                         {'Comments._id':req.body.id},
