@@ -4,6 +4,7 @@
 var express = require('express');
 var router = express.Router();
 var mongoose =require('mongoose');
+var slugify = require('slugify');
 
 var user = require('../app/models/user');
 
@@ -24,6 +25,15 @@ var userSchema = new Schema({
 });
 
 var UserPost = mongoose.model('userPost',userSchema);
+
+var votes = new Schema({
+    CommentId: String,
+    Voters: [{
+        UserEmail: String
+    }]
+});
+
+var Votes = mongoose.model('votes',votes);
 
 /* GET users listing. */
 
@@ -60,7 +70,7 @@ router.post('/naya2',function(req,res){
         PostLanguage: req.body.postLanguage,
         TargetLanguage: req.body.targetLanguage,
         Description: req.body.description,
-        PostDomain: "langPost/"+req.body.title
+        PostDomain: slugify(req.body.title)
     });
 
     h.save(function(err){
@@ -76,16 +86,14 @@ router.post('/naya2',function(req,res){
 
 });
 
-//variable to hold off the value of last opened post.
-var lastPost;
 
 //particular page of every post.
 router.get('/langPost/:pdid',function(req,res){
-    var a = req.params.pdid;
+    var a =  req.params.pdid;
+    //var a = new mongoose.Types.ObjectId('5858d1811d1cda8403d6e4c8');
 
-    lastPost = a;
-
-    UserPost.findOne({PostTitle:a},function(err,movies){
+    UserPost.findOne({PostDomain:a},function(err,movies){
+   // UserPost.findOne({_id:a},function(err,movies){
 
         res.render('langPost', {
             postData: movies
@@ -99,7 +107,7 @@ router.get('/langPost/:pdid',function(req,res){
 router.post('/naya3',function(req,res){
 
 
-    UserPost.findOne({PostTitle:lastPost},function(err,docs){
+    UserPost.findOne({PostDomain:req.body.postDomain},function(err,docs){
 
 
         if (docs == null) {
@@ -111,7 +119,7 @@ router.post('/naya3',function(req,res){
                 Count: 0
             }
 
-            console.log(docs);
+            //console.log(docs);
 
             docs.Comments.push(Comment);
 
@@ -120,19 +128,124 @@ router.post('/naya3',function(req,res){
                     console.log(err);
 
                 console.log("Success");
+                var h = Votes({
+                    CommentId: updatedObject.Comments[updatedObject.Comments.length-1]._id,
+                    Voters: [{
+                        UserEmail: req.user.email
+                    }]
+                });
 
-                res.redirect('/langPost/'+lastPost);
+                h.save(function (err, updatedObject2) {
+                    if (err)
+                        console.log(err);
+
+                    console.log("Success");
+                });
+
+                res.redirect("langPost/"+docs.PostDomain);
             });
+
+
+
+
         }
     });
 
 });
 
 //post method for incrementing score
-router.post('/endpoint', function(req, res){
-    var obj = {};
-    console.log('body: ' + req.body.title);
-   // res.send(req.body.title);
+router.post('/increment', function(req, res){
+
+    var check = false;
+
+    Votes.findOne({CommentId :req.body.id},function(err,docs) {
+
+        docs.Voters.forEach(function(item) {
+            if(item.UserEmail == req.user.email)
+                check = true;
+        });
+
+        if(check){
+            UserPost.findOne({'Comments._id' :req.body.id},function(err,docs) {
+                res.redirect("langPost/"+docs.PostDomain);
+            });
+        }
+        else{
+            var userEmail ={
+                UserEmail: req.user.email
+            }
+            docs.Voters.push(userEmail);
+
+            docs.save(function (err, updatedObject) {
+                if (err)
+                    console.log(err);
+            });
+
+            UserPost.findOne({'Comments._id' :req.body.id},function(err,docs) {
+
+
+                UserPost.update(
+                    {'Comments._id':req.body.id},
+                    {$inc: {'Comments.$.Count':1}},
+                    function (err, numAfected) {
+                        res.redirect("langPost/"+docs.PostDomain);
+                    }
+                );
+
+            });
+        }
+    });
+
+
+
+});
+
+//post method for decrementing score
+router.post('/decrement', function(req, res){
+
+    var check = false;
+
+    Votes.findOne({CommentId :req.body.id},function(err,docs) {
+
+            docs.Voters.forEach(function(item) {
+                if(item.UserEmail == req.user.email)
+                    check = true;
+            });
+
+            if(check){
+                UserPost.findOne({'Comments._id' :req.body.id},function(err,docs) {
+                            res.redirect("langPost/"+docs.PostDomain);
+                });
+            }
+            else{
+            var userEmail ={
+                UserEmail: req.user.email
+            }
+            docs.Voters.push(userEmail);
+
+            docs.save(function (err, updatedObject) {
+                if (err)
+                    console.log(err);
+            });
+
+                UserPost.findOne({'Comments._id' :req.body.id},function(err,docs) {
+
+
+                    UserPost.update(
+                        {'Comments._id':req.body.id},
+                        {$inc: {'Comments.$.Count':-1}},
+                        function (err, numAfected) {
+                            res.redirect("langPost/"+docs.PostDomain);
+                        }
+                    );
+
+                });
+            }
+    });
+
+
+
+
 });
 
 module.exports = router;
