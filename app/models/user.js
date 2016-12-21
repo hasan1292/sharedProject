@@ -27,6 +27,7 @@ var userSchema = mongoose.Schema({
         picture : { data: Buffer, contentType: String },
         introduce : String,
         profile_creation_date : {type: Date, default: Date.now},
+        credits: { type: Number, default: 20 },
         score_nb : { type: Number, default: 0 },
         translations_nb : { type: Number, default: 0 },
         reviews_nb : { type: Number, default: 0 },

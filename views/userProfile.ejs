@@ -1,0 +1,76 @@
+<!-- views/profile.ejs -->
+<!doctype html>
+<html>
+<head>
+    <title>My Profile</title>
+    <% include partials/template/head.ejs %>
+
+    <style>
+        body 		{ word-wrap:break-word; }
+    </style>
+</head>
+<body>
+<% include partials/template/header.ejs %>
+<div class="container">
+
+    <div class="page-header text-center">
+        <h1><span class="fa fa-anchor"></span> Profile of <%= user.email %></h1>
+        <a href="/logout" class="btn btn-default btn-sm">Logout</a>
+    </div>
+
+    <div class="row">
+
+        <!-- LOCAL INFORMATION -->
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="well">
+                    <h3><span class="fa fa-user"></span> Info</h3>
+
+                    <p>
+                        <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                        <% for(i=0;i<4;i++) {%>
+                        <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
+                        <% }%><br>
+                        <strong>email</strong>: <%= user.email %><br>
+                        <strong>native language</strong>: <%= user.nativeLanguage %><br>
+                        <strong>other language</strong>: <%= user.otherLanguage %><br>
+                        <strong>Remaining Credits</strong>: <%= user.credits %><br>
+                        <strong>Score</strong>: <%= user.score_nb %><br>
+                        <strong>Requested Help</strong>: <%= user.translations_nb %><br>
+                        <strong>Provided Help</strong>: <%= user.reviews_nb %><br>
+                        <strong>Profile created on</strong>: <%= user.profile_creation_date %><br>
+                    </p>
+
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+    <script>
+        function dispInit() {
+            document.getElementById("init").style.visibility = "visible"
+            document.getElementById("edit").style.visibility = "hidden"
+            document.getElementById("saved").style.visibility = "hidden"
+        }
+        function dispEdit() {
+            document.getElementById("init").style.visibility = "hidden"
+            document.getElementById("edit").style.visibility = "visible"
+            document.getElementById("saved").style.visibility = "hidden"
+        }
+        function dispSaved() {
+            document.getElementById("init").style.visibility = "hidden"
+            document.getElementById("edit").style.visibility = "hidden"
+            document.getElementById("saved").style.visibility = "visible"
+        }
+    </script>
+    <% if(user.introduce == null) { %>
+    <script>dispInit()</script>
+    <% } else { %>
+    <script>dispSaved()</script>
+    <% } %>
+
+</div>
+</body>
+</html>
