@@ -130,7 +130,8 @@ router.get('/langPost/:pdid',function(req,res){
    // UserPost.findOne({_id:a},function(err,movies){
 
         res.render('langPost', {
-            postData: movies
+            postData: movies,
+            user: req.user.email
         });
 
     });
