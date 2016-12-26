@@ -38,13 +38,6 @@
                         </form>
                     </div>
 
-
-                    <% for(i=0;i<Math.round(6*20/40);i++) {%>
-                    <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                    <% }%>
-                    <% for(i=0;i<Math.round(6-6*20/40);i++) {%>
-                    <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
-                    <% }%><br>
                     <strong>Username</strong>: <%= user.email %><br>
                     <strong>Native language</strong>: <%= user.nativeLanguage %><br>
                     <strong>Other language</strong>: <% for(i=0; i<user.otherLanguage.length && user.otherLanguage[i] !="";i++) { %>
@@ -64,7 +57,7 @@
 
             <div class="col-sm-6">
                 <div class="well">
-                    <h3><span class="fa fa-edit"></span> Essay</h3>
+                    <h3><span class="fa fa-edit"></span> About me</h3>
 
                     <a id="init" onclick="dispEdit()"><span class="fa fa-plus"></span> Introduce yourself a bit...</a>
                     <div id="saved" style="visibility:hidden">
@@ -111,9 +104,8 @@
     <% } %>
 
 
-
-
 </div>
+<% include partials/template/footer.ejs %>
 </body>
 </html>
 

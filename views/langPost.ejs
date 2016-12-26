@@ -7,6 +7,26 @@
 
     <style>
         body 		{ word-wrap:break-word; }
+        .glyphicon-triangle-top {color:green;}
+        .glyphicon-triangle-bottom {color:red;}
+        button {
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            outline: none;
+            border: 0;
+            background: transparent;
+            background-color: transparent;
+        }
+        hr {
+            border: 0;
+            clear:both;
+            display:block;
+            width: 96%;
+            background-color:#AAAAAA;
+            height: 1px;
+        }
+
     </style>
 </head>
 <body>
@@ -21,7 +41,7 @@
         <h1><span class="fa fa-anchor"></span>Post: <%= postData.PostTitle %></h1>
     </div>
 
-    <div class="t3">
+    <div class="col-md-8 well portfolio-item">
 
         <table class="t3">
 
@@ -34,42 +54,44 @@
             <tr><td class ="t1" valign="centre"><b>Post:   </b></td><td class ="t2" ><%= postData.Description %></td></tr>
 
         </table>
-
-        <p>_________________________________________________________________________________________________________________________________________________________________</p>
     </div>
-
+    <hr>
 
   <% postData.Comments.forEach(function(item){ %>
-    <div class="row">
 
-
-        <div class="col-md-15 portfolio-item">
+        <div class="col-md-8 portfolio-item">
             <p><b>Commentator: </b><a href="/userProfile/<%= item.Commentator %>"><%= item.Commentator %></a></p>
             <table class="t3">
 
                 <tr><td class ="t1" valign="centre"><b>Score:   </b></td>
                     <td class ="t2"><%= item.Count %></td>
+                    <div class="container column">
                     <td class ="t2">
                         <!-- todo : improve upvote-downvote buttons -->
                         <form role="form" action="/increment" method="POST">
                             <input type="hidden" name="id" value=<%= item._id %>>
-                            <button id= "<%= item._id %>"  type="submit" class="btn btn-default">UpVote</button>
+                            <button id= "<%= item._id %>"  type="submit">
+                                <h1  class="glyphicon glyphicon-triangle-top"></h1>
+                            </button>
                         </form></td>
                     <td class ="t2">
                         <form role="form" action="/decrement" method="POST">
                             <input type="hidden" name="id" value=<%= item._id %>>
-                            <button id= "<%= item._id %>"  type="submit" class="btn btn-default">DownVote</button>
+                            <button id= "<%= item._id %>"  type="submit">
+                                <h1  class="glyphicon glyphicon-triangle-bottom"></h1>
+                            </button>
                         </form></td>
+                    </div>
                 </tr>
             </table>
             <p><b>Comment:  </b><%= item.Comment %></p>
-            <p>______________________________________________________________________________________________________________________________________________</p>
+
         </div>
-    </div>
+    <hr>
     <% }); %>
 
     <% if(user != postData.PostCreator){ %>
-    <div class="container">
+    <div class="col-md-8">
         <form role="form" action="/naya3" method="POST">
 
             <div class="form-group">
@@ -85,5 +107,6 @@
     <% } %>
 
 </div>
+<% include partials/template/footer.ejs %>
 </body>
 </html>
