@@ -1,5 +1,7 @@
 // app/routes.js
 var user = require('../app/models/user'); //i get the address of user model in the link you give, but in general it should be the user model address.
+var multer = require('multer');
+var fs = require('fs');
 
 module.exports = function(app, passport) {
 
@@ -71,6 +73,38 @@ module.exports = function(app, passport) {
 
         });
         res.redirect('/profile#init');
+    });
+    var uploading = multer({
+        dest: __dirname + "/../public/uploads/",
+    });
+    app.post('/upload', uploading.single('picture'), function(req, res) {
+        /** When using the "single"
+         data come in "req.file" regardless of the attribute "name". **/
+        var tmp_path = req.file.path;
+
+        /** The original name of the uploaded file
+         stored in the variable "originalname". **/
+        var target_path = __dirname + "/../public/uploads/" + req.file.originalname;
+
+        user.findOne({email: req.user.email}, function (err, user) {
+            if (user == null) {
+                console.log("cannot find user");
+            } else {
+                console.log("le file :" + req.file.originalname);
+                user.picture = req.file.originalname;
+                user.save(function (err, updatedObject) {
+                    if (err)
+                        console.log(err);
+                });
+            }
+        });
+
+        /** A better way to copy the uploaded file. **/
+        var src = fs.createReadStream(tmp_path);
+        var dest = fs.createWriteStream(target_path);
+        src.pipe(dest);
+        src.on('end', function() { res.redirect('/profile'); });
+        src.on('error', function(err) { res.render('/home'); });
     });
 
 	// =====================================

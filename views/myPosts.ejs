@@ -21,12 +21,12 @@
         <h1><span class="fa fa-anchor"></span>Posts of <%= title %></h1>
     </div>
 
-    <p>______________________________________________________________________________________________________________________________________________</p>
+
     <% userPosts.forEach(function(item){ %>
-    <div class="row">
+    <div class="container">
 
 
-        <div class="col-md-15 portfolio-item">
+        <div class="col-md-10 well portfolio-item">
             <a href="#">
                 <!--<img class="img-responsive" src="http://placehold.it/700x400" alt="">-->
             </a>
@@ -37,7 +37,6 @@
             <p><b>Post Language: </b><%= item.PostLanguage %></p>
             <p><b>Target Language: </b><%= item.TargetLanguage %></p>
             <p><b>Post Creator: </b><%= item.PostCreator %></p>
-            <p>______________________________________________________________________________________________________________________________________________</p>
         </div>
     </div>
     <% }); %>
