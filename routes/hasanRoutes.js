@@ -52,23 +52,42 @@ var UserInfo = mongoose.model('user',userInfo);
 
 /* GET users listing. */
 
-
 //homepage of every user
 router.get('/home', function(req, res, next) {
     var user = req.user.email;
 
+    var list = [];
+    var otherLanguages = req.user.otherLanguage;
+    var nativeLanguages = req.user.nativeLanguage;
+    var check = false;
+
+
     UserPost.find({},function(err,docs){
         if(err) throw err;
         else{
+            docs.forEach(function(item) {
+                check = false;
+                if(item.TargetLanguage == nativeLanguages){
+                    otherLanguages.forEach(function (item2) {
+                        if(item2 == item.PostLanguage)
+                            check = true;
+                    });
+                    if(check)
+                        list.push(item);
+                }
+            });
+
+
             res.render('home', {
-                    title: user,
-                    userPosts: docs
+                title: user,
+                userPosts: list
             });
         }
     });
 
 
 });
+
 //Page for posting request
 router.get('/requestHelp', function(req, res, next) {
     var user = req.user.email;
