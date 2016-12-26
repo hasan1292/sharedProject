@@ -47,7 +47,9 @@
                     <% }%><br>
                     <strong>email</strong>: <%= user.email %><br>
                     <strong>native language</strong>: <%= user.nativeLanguage %><br>
-                    <strong>other language</strong>: <%= user.otherLanguage %><br>
+                    <strong>other language</strong>: <% for(i=0; i<user.otherLanguage.length && user.otherLanguage[i] !="";i++) { %>
+                    <span> <%= user.otherLanguage[i] %>,&nbsp</span>
+                    <% } %><br>
                     <strong>Remaining Credits</strong>: <%= user.credits %><br>
                     <strong>Score</strong>: <%= user.score_nb %><br>
                     <strong>Requested Help</strong>: <%= user.translations_nb %><br>

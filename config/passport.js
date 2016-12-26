@@ -54,7 +54,7 @@ module.exports = function(passport) {
             // check to see if theres already a user with that email
             if (user) {
                 return done(null, false, req.flash('signupMessage', 'That email is already taken.'));
-            } else if (req.body.nativeLanguage == req.body.otherLanguage) {
+            } else if (req.body.nativeLanguage == req.body.otherLanguage[0] || req.body.nativeLanguage == req.body.otherLanguage[1] || req.body.nativeLanguage == req.body.otherLanguage[2]) {
                     return done(null, false, req.flash('signupMessage', 'Native and Other languages must be different'));
             } else {
 
