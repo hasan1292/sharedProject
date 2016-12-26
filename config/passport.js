@@ -69,11 +69,7 @@ module.exports = function(passport) {
                 newUser.otherLanguage = req.body.otherLanguage;
                 newUser.introduce = req.body.introduce;
                 newUser.score = 0;
-
-                var imgPath = __dirname + '/../public/images/logo.png';
-
-                newUser.picture.data = fs.readFileSync(imgPath);
-                newUser.picture.contentType = 'image/png';
+                newUser.picture = "images/default_user.png"
 
 				// save the user
                 newUser.save(function(err) {

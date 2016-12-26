@@ -24,7 +24,7 @@ var userSchema = mongoose.Schema({
         password     : String,
         nativeLanguage : String,
         otherLanguage : String,
-        picture : { data: Buffer, contentType: String },
+        picture : String,
         introduce : String,
         profile_creation_date : {type: Date, default: Date.now},
         credits: { type: Number, default: 20 },

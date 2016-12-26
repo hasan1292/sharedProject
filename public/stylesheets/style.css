@@ -1,8 +1,26 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-}
 
 a {
-  color: #00B7FF;
+  /*color: #00B7FF;*/
+  color: #246AAD;
+}
+a:hover {
+  color: #33AAFF;
+  text-decoration: none;
+
+}
+.form-group.required .control-label:after {
+  content:"*";
+  color:red;
+}
+
+ .kv-avatar .file-preview-frame,.kv-avatar .file-preview-frame:hover {
+   margin: 0;
+   padding: 0;
+   border: none;
+   box-shadow: none;
+   text-align: center;
+ }
+.kv-avatar .file-input {
+  display: table-cell;
+  max-width: 220px;
 }

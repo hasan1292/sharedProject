@@ -11,6 +11,10 @@
 </head>
 <body>
 <% include partials/template/header.ejs %>
+<script>
+    setActiveTab("userProfile")
+</script>
+
 <div class="container">
 
     <div class="page-header text-center">
@@ -45,23 +49,31 @@
             </div>
 
 
+            <div class="col-sm-6">
+                <div class="well">
+                    <h3><span class="fa fa-edit"></span> Essay</h3>
+
+                    <em id="init"><span class="fa fa-info"></span>&nbsp&nbsp Looks like this user hasn't written anything yet...</em>
+                    <div id="saved" style="visibility:hidden">
+                            <p><%= user.introduce %></p>
+                            <div name="introduce"></div>
+                    </div>
+
+
+                </div>
+            </div>
+
+
         </div>
 
     </div>
     <script>
         function dispInit() {
             document.getElementById("init").style.visibility = "visible"
-            document.getElementById("edit").style.visibility = "hidden"
-            document.getElementById("saved").style.visibility = "hidden"
-        }
-        function dispEdit() {
-            document.getElementById("init").style.visibility = "hidden"
-            document.getElementById("edit").style.visibility = "visible"
             document.getElementById("saved").style.visibility = "hidden"
         }
         function dispSaved() {
             document.getElementById("init").style.visibility = "hidden"
-            document.getElementById("edit").style.visibility = "hidden"
             document.getElementById("saved").style.visibility = "visible"
         }
     </script>
