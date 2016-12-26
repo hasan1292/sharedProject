@@ -34,7 +34,7 @@
                         <img src="/uploads/<%= user.picture %>" height="150" width="150">
                         <form action="/upload" method="POST" enctype="multipart/form-data">
                             <input type="file" name="picture">
-                            <input type="submit" value="Upload Image">
+                            <input class="btn btn-default btn-sm" type="submit" value="Upload Image">
                         </form>
                     </div>
 
@@ -45,9 +45,9 @@
                     <% for(i=0;i<Math.round(6-6*20/40);i++) {%>
                     <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
                     <% }%><br>
-                    <strong>email</strong>: <%= user.email %><br>
-                    <strong>native language</strong>: <%= user.nativeLanguage %><br>
-                    <strong>other language</strong>: <% for(i=0; i<user.otherLanguage.length && user.otherLanguage[i] !="";i++) { %>
+                    <strong>Username</strong>: <%= user.email %><br>
+                    <strong>Native language</strong>: <%= user.nativeLanguage %><br>
+                    <strong>Other language</strong>: <% for(i=0; i<user.otherLanguage.length && user.otherLanguage[i] !="";i++) { %>
                     <span> <%= user.otherLanguage[i] %>,&nbsp</span>
                     <% } %><br>
                     <strong>Remaining Credits</strong>: <%= user.credits %><br>

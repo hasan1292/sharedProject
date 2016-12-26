@@ -32,13 +32,13 @@
                     <h3><span class="fa fa-user"></span> Info</h3>
 
                     <p>
-                        <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                        <% for(i=0;i<4;i++) {%>
-                        <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
-                        <% }%><br>
-                        <strong>email</strong>: <%= user.email %><br>
-                        <strong>native language</strong>: <%= user.nativeLanguage %><br>
-                        <strong>other language</strong>: <%= user.otherLanguage %><br>
+                    <div class="row">
+                        <img src="/uploads/<%= user.picture %>" height="150" width="150">
+                    </div>
+
+                        <strong>Username</strong>: <%= user.email %><br>
+                        <strong>Native language</strong>: <%= user.nativeLanguage %><br>
+                        <strong>Other language</strong>: <%= user.otherLanguage %><br>
                         <strong>Remaining Credits</strong>: <%= user.credits %><br>
                         <strong>Score</strong>: <%= user.score_nb %><br>
                         <strong>Requested Help</strong>: <%= user.translations_nb %><br>
