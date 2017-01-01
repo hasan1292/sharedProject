@@ -68,7 +68,7 @@ router.get('/home', function(req, res, next) {
         else{
             docs.forEach(function(item) {
                 check = false;
-                if(item.TargetLanguage == nativeLanguages){
+                if(item.TargetLanguage == nativeLanguages ){
                     otherLanguages.forEach(function (item2) {
                         if(item2 == item.PostLanguage)
                             check = true;
@@ -76,8 +76,15 @@ router.get('/home', function(req, res, next) {
                     if(check)
                         list.push(item);
                 }
+                if(item.PostLanguage == nativeLanguages ){
+                    otherLanguages.forEach(function (item2) {
+                        if(item2 == item.TargetLanguage)
+                            check = true;
+                    });
+                    if(check)
+                        list.push(item);
+                }
             });
-
 
             res.render('home', {
                 title: user,
