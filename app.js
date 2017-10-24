@@ -19,7 +19,10 @@ var app = express();
 app.use(express.static(path.join(__dirname, 'public')));
 
 // configuration ===============================================================
-mongoose.connect(configDB.url); // connect to our database
+mongoose.connect(configDB.url).then(
+  () => {console.log('connected !')},
+  err => {console.log('error connecting !')}
+);
 
 require('./config/passport')(passport); // pass passport for configuration
 
