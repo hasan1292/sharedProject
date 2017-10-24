@@ -6,50 +6,52 @@ var router = express.Router();
 var mongoose =require('mongoose');
 var slugify = require('slugify');
 
-var user = require('../app/models/user');
+var UserInfo = require('../app/models/models').User;
+var UserPost = require('../app/models/models').post;
+var Votes = require('../app/models/models').votesOnAComment;
 
-var Schema = mongoose.Schema;
+// var Schema = mongoose.Schema;
 
-var userSchema = new Schema({
-    PostCreator: String,
-    PostTitle: String,
-    PostLanguage: String,
-    TargetLanguage: String,
-    Description: String,
-    PostDomain: String,
-    Comments: [{
-        Commentator: String,
-        Comment: String,
-        Count: Number
-    }]
-});
+// var userSchema = new Schema({
+//     PostCreator: String,
+//     PostTitle: String,
+//     PostLanguage: String,
+//     TargetLanguage: String,
+//     Description: String,
+//     PostDomain: String,
+//     Comments: [{
+//         Commentator: String,
+//         Comment: String,
+//         Count: Number
+//     }]
+// });
 
-var UserPost = mongoose.model('userPost',userSchema);
+// var UserPost = mongoose.model('userPost',userSchema);
 
-var votes = new Schema({
-    CommentId: String,
-    Voters: [{
-        UserEmail: String
-    }]
-});
+// var votes = new Schema({
+//     CommentId: String,
+//     Voters: [{
+//         UserEmail: String
+//     }]
+// });
 
-var Votes = mongoose.model('votes',votes);
+// var Votes = mongoose.model('votes',votes);
 
-var userInfo = new Schema({
-    email        : String,
-    password     : String,
-    nativeLanguage : String,
-    otherLanguage : [String],
-    picture : String,
-    introduce : String,
-    credits: Number,
-    profile_creation_date : {type: Date, default: Date.now},
-    score_nb : { type: Number, default: 0 },
-    translations_nb : { type: Number, default: 0 },
-    reviews_nb : { type: Number, default: 0 }
-});
+// var userInfo = new Schema({
+//     email        : String,
+//     password     : String,
+//     nativeLanguage : String,
+//     otherLanguage : [String],
+//     picture : String,
+//     introduce : String,
+//     credits: Number,
+//     profile_creation_date : {type: Date, default: Date.now},
+//     score_nb : { type: Number, default: 0 },
+//     translations_nb : { type: Number, default: 0 },
+//     reviews_nb : { type: Number, default: 0 }
+// });
 
-var UserInfo = mongoose.model('user',userInfo);
+// var UserInfo = mongoose.model('user',userInfo);
 
 /* GET users listing. */
 
@@ -104,7 +106,7 @@ router.get('/requestHelp', function(req, res, next) {
 });
 
 //post method for the saving of requestHelp
-router.post('/naya2',function(req,res){
+router.post('/sendRequest',function(req,res){
 
     UserInfo.findOne({email:req.user.email},function(err,docs) {
 
@@ -166,7 +168,7 @@ router.get('/langPost/:pdid',function(req,res){
 });
 
 //post method of comments on posts
-router.post('/naya3',function(req,res){
+router.post('/sendComment',function(req,res){
 
 
     UserPost.findOne({PostDomain:req.body.postDomain},function(err,docs){

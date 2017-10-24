@@ -18,8 +18,7 @@ var Request = mongoose.Schema({
     translations : [Translation]
 });
 // define the schema for our user model
-var userSchema = mongoose.Schema({
-
+var User = mongoose.Schema({
         email        : String,
         password     : String,
         nativeLanguage : String,
@@ -30,22 +29,45 @@ var userSchema = mongoose.Schema({
         credits: { type: Number, default: 20 },
         score_nb : { type: Number, default: 0 },
         translations_nb : { type: Number, default: 0 },
-        reviews_nb : { type: Number, default: 0 },
-        requests : [Request]
-
-
+        reviews_nb : { type: Number, default: 0 }
 });
 
 // methods ======================
 // generating a hash
-userSchema.methods.generateHash = function(password) {
+User.methods.generateHash = function(password) {
     return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
 };
 
 // checking if password is valid
-userSchema.methods.validPassword = function(password) {
+User.methods.validPassword = function(password) {
     return bcrypt.compareSync(password, this.password);
 };
 
+var post = mongoose.Schema({
+    PostCreator: String,
+    PostTitle: String,
+    PostLanguage: String,
+    TargetLanguage: String,
+    Description: String,
+    PostDomain: String,
+    Comments: [{
+        Commentator: String,
+        Comment: String,
+        Count: Number
+    }]
+});
+
+var UserPost = mongoose.model('userPost',post);
+
+var votesOnAComment = mongoose.Schema({
+    CommentId: String,
+    Voters: [{
+        UserEmail: String
+    }]
+});
 // create the model for users and expose it to our app
-module.exports = mongoose.model('User', userSchema);
+module.exports = {
+    User: mongoose.model('User',User),
+    post: mongoose.model('userPost',post),
+    votesOnAComment: mongoose.model('votes',votesOnAComment)
+}

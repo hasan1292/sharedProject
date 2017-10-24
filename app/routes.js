@@ -1,5 +1,5 @@
 // app/routes.js
-var user = require('../app/models/user'); //i get the address of user model in the link you give, but in general it should be the user model address.
+var user = require('../app/models/models').User //i get the address of user model in the link you give, but in general it should be the user model address.
 var multer = require('multer');
 var fs = require('fs');
 

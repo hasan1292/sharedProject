@@ -48,7 +48,7 @@ app.use(flash()); // use connect-flash for flash messages stored in session
 // routes ======================================================================
 require('./app/routes.js')(app, passport); // load our routes and pass in our app and fully configured passport
 
-app.use('/', hasanRoutes);
+app.use(hasanRoutes);
 
 
 // catch 404 and forward to error handler
