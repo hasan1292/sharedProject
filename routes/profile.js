@@ -1,4 +1,4 @@
-// app/routes.js
+// app/profile.js
 var user = require('../app/models/models').User //i get the address of user model in the link you give, but in general it should be the user model address.
 var multer = require('multer');
 var fs = require('fs');
@@ -73,7 +73,8 @@ module.exports = function(app, passport) {
 
         });
         res.redirect('/profile#init');
-    });
+	});
+	//TODO: delete old pictures
     var uploading = multer({
         dest: __dirname + "/../public/uploads/",
     });

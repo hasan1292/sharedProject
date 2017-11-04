@@ -57,8 +57,6 @@ var post = mongoose.Schema({
     }]
 });
 
-var UserPost = mongoose.model('userPost',post);
-
 var votesOnAComment = mongoose.Schema({
     CommentId: String,
     Voters: [{

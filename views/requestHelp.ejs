@@ -22,6 +22,9 @@
     </div>
 
     <div class="col-md-8">
+        <% if (message.length > 0) { %>
+            <div class="alert alert-danger"><%= message %></div>
+        <% } %>
         <form role="form" action="/sendRequest" method="POST">
             <div class="form-group">
                 <label for="text">Title</label>

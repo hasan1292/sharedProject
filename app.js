@@ -8,13 +8,13 @@ var mongoose = require('mongoose');
 var passport = require('passport');
 var flash    = require('connect-flash');
 var session = require('express-session');
+var MongoStore = require('connect-mongo')(session);
 var multer = require('multer');
 var fs = require('fs');
 
 var configDB = require('./config/database.js');
-//var index = require('./routes/index');
-//var users = require('./routes/users');
-var hasanRoutes = require('./routes/hasanRoutes');
+var index = require('./routes/posting.js');
+
 var app = express();
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -37,18 +37,28 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // required for passport
-app.use(session({ secret: 'ilovescotchscotchyscotchscotch' })); // session secret
+var sessionParams = { secret: 'ilovescotchscotchyscotchscotch',maxAge: new Date(Date.now() + 3600000),
+
+}
+//  save user session in database only in dev environment
+if(process.env.NODE_ENV=='dev') {
+  sessionParams.store = new MongoStore(
+    {mongooseConnection:mongoose.connection
+    })
+}
+
+app.use(session( sessionParams)); // session secret
 app.use(passport.initialize());
-app.use(passport.session({cookie: { expires : new Date(Date.now() + 3600000) } })); // persistent login sessions
+app.use(passport.session()); // persistent login sessions
 app.use(flash()); // use connect-flash for flash messages stored in session
 
 
 
 
 // routes ======================================================================
-require('./app/routes.js')(app, passport); // load our routes and pass in our app and fully configured passport
+require('./routes/profile.js')(app, passport); // load our routes and pass in our app and fully configured passport
 
-app.use(hasanRoutes);
+app.use(index);
 
 
 // catch 404 and forward to error handler

@@ -1,6 +1,4 @@
-/**
- * Created by Hasan on 16/12/2016.
- */
+
 var express = require('express');
 var router = express.Router();
 var mongoose =require('mongoose');
@@ -9,49 +7,6 @@ var slugify = require('slugify');
 var UserInfo = require('../app/models/models').User;
 var UserPost = require('../app/models/models').post;
 var Votes = require('../app/models/models').votesOnAComment;
-
-// var Schema = mongoose.Schema;
-
-// var userSchema = new Schema({
-//     PostCreator: String,
-//     PostTitle: String,
-//     PostLanguage: String,
-//     TargetLanguage: String,
-//     Description: String,
-//     PostDomain: String,
-//     Comments: [{
-//         Commentator: String,
-//         Comment: String,
-//         Count: Number
-//     }]
-// });
-
-// var UserPost = mongoose.model('userPost',userSchema);
-
-// var votes = new Schema({
-//     CommentId: String,
-//     Voters: [{
-//         UserEmail: String
-//     }]
-// });
-
-// var Votes = mongoose.model('votes',votes);
-
-// var userInfo = new Schema({
-//     email        : String,
-//     password     : String,
-//     nativeLanguage : String,
-//     otherLanguage : [String],
-//     picture : String,
-//     introduce : String,
-//     credits: Number,
-//     profile_creation_date : {type: Date, default: Date.now},
-//     score_nb : { type: Number, default: 0 },
-//     translations_nb : { type: Number, default: 0 },
-//     reviews_nb : { type: Number, default: 0 }
-// });
-
-// var UserInfo = mongoose.model('user',userInfo);
 
 /* GET users listing. */
 
@@ -64,36 +19,56 @@ router.get('/home', function(req, res, next) {
     var nativeLanguages = req.user.nativeLanguage;
     var check = false;
 
-
-    UserPost.find({},function(err,docs){
-        if(err) throw err;
-        else{
-            docs.forEach(function(item) {
-                check = false;
-                if(item.TargetLanguage == nativeLanguages ){
-                    otherLanguages.forEach(function (item2) {
-                        if(item2 == item.PostLanguage)
-                            check = true;
-                    });
-                    if(check)
-                        list.push(item);
-                }
-                if(item.PostLanguage == nativeLanguages ){
-                    otherLanguages.forEach(function (item2) {
-                        if(item2 == item.TargetLanguage)
-                            check = true;
-                    });
-                    if(check)
-                        list.push(item);
-                }
-            });
-
+    //TODO: ordering
+    
+    const q1 = {$and:[{TargetLanguage:nativeLanguages},{PostLanguage:otherLanguages}]}
+    const q2 = {$and:[{TargetLanguage:otherLanguages},{PostLanguage:nativeLanguages}]}
+    const projection = {Description:0,Comments:0}
+    UserPost.find(q1,projection).then((docs1)=>{
+        UserPost.find(q2,projection).then( (docs2) => {
+            list.push(...docs1,...docs2)
             res.render('home', {
                 title: user,
                 userPosts: list
             });
-        }
-    });
+        })
+    })
+    // UserPost.find({q1}).then((docs)=>{
+      
+    // })
+    // res.render('home', {
+    //     title: user,
+    //     userPosts: docs
+    // });
+    // UserPost.find({},function(err,docs){
+    //     if(err) throw err;
+    //     else{
+    //         docs.forEach(function(item) {
+    //             check = false;
+    //             if(item.TargetLanguage == nativeLanguages ){
+    //                 otherLanguages.forEach(function (item2) {
+    //                     if(item2 == item.PostLanguage)
+    //                         check = true;
+    //                 });
+    //                 if(check)
+    //                     list.push(item);
+    //             }
+    //             if(item.PostLanguage == nativeLanguages ){
+    //                 otherLanguages.forEach(function (item2) {
+    //                     if(item2 == item.TargetLanguage)
+    //                         check = true;
+    //                 });
+    //                 if(check)
+    //                     list.push(item);
+    //             }
+    //         });
+
+    //         res.render('home', {
+    //             title: user,
+    //             userPosts: list
+    //         });
+    //     }
+    // });
 
 
 });
@@ -102,51 +77,65 @@ router.get('/home', function(req, res, next) {
 router.get('/requestHelp', function(req, res, next) {
     var user = req.user.email;
 
-    res.render('requestHelp', { title: user });
+    res.render('requestHelp', { title: user, message: req.flash('sendRequestMessage') });
 });
 
 //post method for the saving of requestHelp
 router.post('/sendRequest',function(req,res){
+    //TODO: check that request is complete
+    if(!req.body.title) {
+        req.flash('sendRequestMessage','Please input a title for this post')
+        res.redirect('/requestHelp')
+    }
+    else if(!req.body.description) {
+        req.flash('sendRequestMessage','Please input a description for this post')
+        res.redirect('/requestHelp')
+    }
+    else if(req.body.postLanguage == req.body.targetLanguage) {
+        req.flash('sendRequestMessage','The post language and the target languages must be different')
+        res.redirect('/requestHelp')
+    }
+    else {
+        UserInfo.findOne({email:req.user.email},function(err,docs) {
 
-    UserInfo.findOne({email:req.user.email},function(err,docs) {
-
-        if(docs.credits <= 0){
-            res.render('sorry', { });
-        }
-        else{
-
-        var h = UserPost({
-            PostCreator: req.user.email,
-            PostTitle: req.body.title,
-            PostLanguage: req.body.postLanguage,
-            TargetLanguage: req.body.targetLanguage,
-            Description: req.body.description,
-            PostDomain: slugify(req.body.title)
-        });
-
-        UserInfo.update(
-            {'email': req.user.email},
-            {$inc: {'translations_nb': 1, 'credits': -1}},
-            function (err, numAfected) {
-                console.log(numAfected);
+            if(docs.credits <= 0){
+                res.render('sorry', { });
             }
-        );
+            else{
+
+            var h = UserPost({
+                PostCreator: req.user.email,
+                PostTitle: req.body.title,
+                PostLanguage: req.body.postLanguage,
+                TargetLanguage: req.body.targetLanguage,
+                Description: req.body.description,
+                PostDomain: slugify(req.body.title)
+            });
+
+            UserInfo.update(
+                {'email': req.user.email},
+                {$inc: {'translations_nb': 1, 'credits': -1}},
+                function (err, numAfected) {
+                    console.log(numAfected);
+                }
+            );
 
 
-        h.save(function (err) {
-            if (err) throw err;
+            h.save(function (err) {
+                if (err) throw err;
 
-            else {
-                console.log('Project created!');
-                // res.render('success', {
-                //  title: 'Success'
-                //});
-                res.redirect('/myPosts');
+                else {
+                    console.log('Project created!');
+                    // res.render('success', {
+                    //  title: 'Success'
+                    //});
+                    res.redirect('/myPosts');
+                }
+            });
+
             }
         });
-
-        }
-    });
+    }
 });
 
 
@@ -347,24 +336,23 @@ router.get('/myPosts', function(req, res, next) {
 
     var documents = []
 
-    UserPost.find({},function(err,docs){
-        if(err) throw err;
-        else{
-
-            docs.forEach(function(item) {
-                if(item.PostCreator == user)
-                    documents.push(item);
-            });
+    UserPost.find({PostCreator:user},{Comments:0}).then((docs)=> {
 
             res.render('myPosts', {
                 title: user,
-                userPosts: documents
+                userPosts: docs
             });
         }
-    });
-
-
+    );
 });
+//TODO: delete post
+router.get('/deletePost', function(req,res) {
+    console.log(req.query.dom)
+    UserPost.remove({_id:req.query.dom},()=> {
+        res.redirect("/myPosts")
+    })
+
+})
 
 //for visiting profile of particular user.
 router.get('/userProfile/:pdid',function(req,res){

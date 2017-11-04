@@ -23,21 +23,20 @@
 
 
     <% userPosts.forEach(function(item){ %>
-    <div class="container">
+    <div class="container well portfolio-item" style="display:flex; align-items: center;">
 
+            <div class="col-sm-11 ">
+                <h3>
+                    <a href="langPost/<%= item.PostDomain %>"><%= item.PostTitle %></a>
 
-        <div class="col-md-10 well portfolio-item">
-            <a href="#">
-                <!--<img class="img-responsive" src="http://placehold.it/700x400" alt="">-->
+                </h3>
+                <p><b>Post Language: </b><%= item.PostLanguage %></p>
+                <p><b>Target Language: </b><%= item.TargetLanguage %></p>
+                <p><b>Post Creator: </b><%= item.PostCreator %></p>
+            </div>
+            <a href="deletePost?dom=<%= item._id %>" class="col-sm-2" style="color: red;"  align="center">
+                <h3 >delete<br><span style="font-size:32px" class="glyphicon glyphicon-minus"></span></h3>
             </a>
-            <h3>
-                <a href="langPost/<%= item.PostDomain %>"><%= item.PostTitle %></a>
-
-            </h3>
-            <p><b>Post Language: </b><%= item.PostLanguage %></p>
-            <p><b>Target Language: </b><%= item.TargetLanguage %></p>
-            <p><b>Post Creator: </b><%= item.PostCreator %></p>
-        </div>
 
     </div>
     <% }); %>
