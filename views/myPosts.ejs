@@ -23,9 +23,9 @@
 
 
     <% userPosts.forEach(function(item){ %>
-    <div class="container well portfolio-item" style="display:flex; align-items: center;">
-
-            <div class="col-sm-11 ">
+    <div class="container well portfolio-item">
+        <div class="row align-items-center">
+            <div class="col-sm-10 " style="background-color:">
                 <h3>
                     <a href="langPost/<%= item.PostDomain %>"><%= item.PostTitle %></a>
 
@@ -34,10 +34,12 @@
                 <p><b>Target Language: </b><%= item.TargetLanguage %></p>
                 <p><b>Post Creator: </b><%= item.PostCreator %></p>
             </div>
-            <a href="deletePost?dom=<%= item._id %>" class="col-sm-2" style="color: red;"  align="center">
-                <h3 >delete<br><span style="font-size:32px" class="glyphicon glyphicon-minus"></span></h3>
-            </a>
-
+            <div class="col-sm-2">
+                <a href="deletePost?dom=<%= item._id %>" style="color: red; background-color:blue"  align="center">
+                    <h3 >delete<br><span style="font-size:32px" class="glyphicon glyphicon-minus"></span></h3>
+                </a>
+            </div>
+        </div>
     </div>
     <% }); %>
 

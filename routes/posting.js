@@ -11,7 +11,7 @@ var Votes = require('../app/models/models').votesOnAComment;
 /* GET users listing. */
 
 //homepage of every user
-router.get('/home', function(req, res, next) {
+router.get('/home', isLoggedIn, function(req, res, next) {
     var user = req.user.email;
 
     var list = [];
@@ -33,48 +33,10 @@ router.get('/home', function(req, res, next) {
             });
         })
     })
-    // UserPost.find({q1}).then((docs)=>{
-      
-    // })
-    // res.render('home', {
-    //     title: user,
-    //     userPosts: docs
-    // });
-    // UserPost.find({},function(err,docs){
-    //     if(err) throw err;
-    //     else{
-    //         docs.forEach(function(item) {
-    //             check = false;
-    //             if(item.TargetLanguage == nativeLanguages ){
-    //                 otherLanguages.forEach(function (item2) {
-    //                     if(item2 == item.PostLanguage)
-    //                         check = true;
-    //                 });
-    //                 if(check)
-    //                     list.push(item);
-    //             }
-    //             if(item.PostLanguage == nativeLanguages ){
-    //                 otherLanguages.forEach(function (item2) {
-    //                     if(item2 == item.TargetLanguage)
-    //                         check = true;
-    //                 });
-    //                 if(check)
-    //                     list.push(item);
-    //             }
-    //         });
-
-    //         res.render('home', {
-    //             title: user,
-    //             userPosts: list
-    //         });
-    //     }
-    // });
-
-
 });
 
 //Page for posting request
-router.get('/requestHelp', function(req, res, next) {
+router.get('/requestHelp', isLoggedIn, function(req, res, next) {
     var user = req.user.email;
 
     res.render('requestHelp', { title: user, message: req.flash('sendRequestMessage') });
@@ -82,7 +44,6 @@ router.get('/requestHelp', function(req, res, next) {
 
 //post method for the saving of requestHelp
 router.post('/sendRequest',function(req,res){
-    //TODO: check that request is complete
     if(!req.body.title) {
         req.flash('sendRequestMessage','Please input a title for this post')
         res.redirect('/requestHelp')
@@ -140,7 +101,7 @@ router.post('/sendRequest',function(req,res){
 
 
 //particular page of every post.
-router.get('/langPost/:pdid',function(req,res){
+router.get('/langPost/:pdid', isLoggedIn, function(req,res){
     var a =  req.params.pdid;
     //var a = new mongoose.Types.ObjectId('5858d1811d1cda8403d6e4c8');
 
@@ -214,6 +175,7 @@ router.post('/sendComment',function(req,res){
 
 });
 
+//TODO: fix broken upvoting system !
 //post method for incrementing score
 router.post('/increment', function(req, res){
 
@@ -331,7 +293,7 @@ router.post('/decrement', function(req, res){
 });
 
 //myPosts route
-router.get('/myPosts', function(req, res, next) {
+router.get('/myPosts', isLoggedIn, function(req, res, next) {
     var user = req.user.email;
 
     var documents = []
@@ -345,8 +307,7 @@ router.get('/myPosts', function(req, res, next) {
         }
     );
 });
-//TODO: delete post
-router.get('/deletePost', function(req,res) {
+router.get('/deletePost', isLoggedIn, function(req,res) {
     console.log(req.query.dom)
     UserPost.remove({_id:req.query.dom},()=> {
         res.redirect("/myPosts")
@@ -355,7 +316,7 @@ router.get('/deletePost', function(req,res) {
 })
 
 //for visiting profile of particular user.
-router.get('/userProfile/:pdid',function(req,res){
+router.get('/userProfile/:pdid', isLoggedIn, function(req,res){
     var a =  req.params.pdid;
     //var a = new mongoose.Types.ObjectId('5858d1811d1cda8403d6e4c8');
 
@@ -370,5 +331,16 @@ router.get('/userProfile/:pdid',function(req,res){
     });
 
 });
+
+// route middleware to make sure the user is logged in
+function isLoggedIn(req, res, next) {
+    
+        // if user is authenticated in the session, carry on
+        if (req.isAuthenticated())
+            return next();
+    
+        // if they aren't redirect them to the home page
+        res.redirect('/');
+    }
 
 module.exports = router;

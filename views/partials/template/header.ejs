@@ -10,35 +10,36 @@
 </style>
 </head>
 <header>
-  <div class="hero">
-    <section class="layout">
-      <div class="branding">
-        <a href="/home">
-            <img src="/images/logo.png" height="150" width="150" alt="fanyi-pack">
-        </a>
-      </div><!-- branding -->
-    </section><!-- layout -->
-  </div><!-- hero -->
 
-    <nav class="navigation">
-        <div class="conainer-fluid">
-            <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
+<nav class="navigation">  
+    <div class="container-fluid">
+        <div class="row align-items-end">
+            <div class="col-sm-1 branding" >
+                    <a href="/home">
+                        <img src="/images/logo.png" height="100" width="100" alt="fanyi-pack">
+                    </a>
             </div>
-            <div class="collapse navbar-collapse" id="myNavbar">
-                <ul class="nav nav-tabs head-menu">
-                  <li role="presentation" id="nav1"><a href="/home">Home</a></li>
-                  <li role="presentation" id="nav2"><a href="/requestHelp">Ask for Help</a></li>
-                  <li role="presentation" id="nav3"><a href="/myPosts">My Posts</a></li>
-                  <li class="navbar-right" id="nav4"><a href="/profile">My Profile</a></li>
-                </ul>
+            <div class="col-sm-11" sytle="background-color: green;">
+                <div class="navbar-header">
+                    <!-- triple biscuit -->
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div>
+                <div class="collapse navbar-collapse" id="myNavbar">
+                    <ul class="nav nav-tabs head-menu">
+                    <li role="presentation" id="nav1"><a href="/home">Home</a></li>
+                    <li role="presentation" id="nav2"><a href="/requestHelp">Ask for Help</a></li>
+                    <li role="presentation" id="nav3"><a href="/myPosts">My Posts</a></li>
+                    <li class="navbar-right" id="nav4"><a href="/profile">My Profile</a></li>
+                    </ul>
+                </div>
             </div>
-        </div><!-- layout -->
-    </nav>
+        </div>
+    </div>
+</nav>
     <script>
         //Stack menu when collapsed
         $('#myNavbar').on('show.bs.collapse', function() {

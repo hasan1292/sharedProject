@@ -11,7 +11,7 @@ module.exports = function(app, passport) {
 	app.get('/', function(req, res) {
 		res.render('index.ejs'); // load the index.ejs file
 	});
-
+	//TODO: if not loged in, redirect to login
 	// =====================================
 	// LOGIN ===============================
 	// =====================================
@@ -117,7 +117,7 @@ module.exports = function(app, passport) {
 	});
 };
 
-// route middleware to make sure
+// route middleware to make sure the user is logged in
 function isLoggedIn(req, res, next) {
 
 	// if user is authenticated in the session, carry on

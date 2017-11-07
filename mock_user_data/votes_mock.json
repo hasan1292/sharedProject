@@ -1,0 +1,358 @@
+[{
+	"_id": {
+		"$oid": "5861716b30192f1f16ff02ca"
+	},
+	"CommentId": "5861716b30192f1f16ff02c9",
+	"Voters": [
+		{
+			"UserEmail": "feng",
+			"_id": {
+				"$oid": "5861716b30192f1f16ff02cb"
+			}
+		}
+	],
+	"__v": 0
+},
+{
+	"_id": {
+		"$oid": "58617dc4b6dcb710188c39ca"
+	},
+	"CommentId": "58617dc4b6dcb710188c39c9",
+	"Voters": [
+		{
+			"UserEmail": "thomas",
+			"_id": {
+				"$oid": "58617dc4b6dcb710188c39cb"
+			}
+		},
+		{
+			"UserEmail": "feng",
+			"_id": {
+				"$oid": "58618059b6dcb710188c39db"
+			}
+		}
+	],
+	"__v": 1
+},
+{
+	"_id": {
+		"$oid": "58617f84b6dcb710188c39cf"
+	},
+	"CommentId": "58617f84b6dcb710188c39ce",
+	"Voters": [
+		{
+			"UserEmail": "omar",
+			"_id": {
+				"$oid": "58617f84b6dcb710188c39d0"
+			}
+		}
+	],
+	"__v": 0
+},
+{
+	"_id": {
+		"$oid": "58617fb1b6dcb710188c39d2"
+	},
+	"CommentId": "58617fb1b6dcb710188c39d1",
+	"Voters": [
+		{
+			"UserEmail": "omar",
+			"_id": {
+				"$oid": "58617fb1b6dcb710188c39d3"
+			}
+		},
+		{
+			"UserEmail": "feng",
+			"_id": {
+				"$oid": "58618044b6dcb710188c39da"
+			}
+		}
+	],
+	"__v": 1
+},
+{
+	"_id": {
+		"$oid": "58617fdbb6dcb710188c39d5"
+	},
+	"CommentId": "58617fdbb6dcb710188c39d4",
+	"Voters": [
+		{
+			"UserEmail": "omar",
+			"_id": {
+				"$oid": "58617fdbb6dcb710188c39d6"
+			}
+		},
+		{
+			"UserEmail": "feng",
+			"_id": {
+				"$oid": "5861806cb6dcb710188c39dc"
+			}
+		}
+	],
+	"__v": 1
+},
+{
+	"_id": {
+		"$oid": "58618035b6dcb710188c39d8"
+	},
+	"CommentId": "58618035b6dcb710188c39d7",
+	"Voters": [
+		{
+			"UserEmail": "feng",
+			"_id": {
+				"$oid": "58618035b6dcb710188c39d9"
+			}
+		}
+	],
+	"__v": 0
+},
+{
+	"_id": {
+		"$oid": "5861829cb6dcb710188c39df"
+	},
+	"CommentId": "5861829cb6dcb710188c39de",
+	"Voters": [
+		{
+			"UserEmail": "hasan",
+			"_id": {
+				"$oid": "5861829cb6dcb710188c39e0"
+			}
+		},
+		{
+			"UserEmail": "thomas",
+			"_id": {
+				"$oid": "5861848440bc7fc1194410f0"
+			}
+		},
+		{
+			"UserEmail": "usman",
+			"_id": {
+				"$oid": "5861f72c195c5e621b3c9f88"
+			}
+		}
+	],
+	"__v": 2
+},
+{
+	"_id": {
+		"$oid": "5861f146195c5e621b3c9f6b"
+	},
+	"CommentId": "5861f146195c5e621b3c9f6a",
+	"Voters": [
+		{
+			"UserEmail": "feng",
+			"_id": {
+				"$oid": "5861f146195c5e621b3c9f6c"
+			}
+		},
+		{
+			"UserEmail": "hasan",
+			"_id": {
+				"$oid": "5861f205195c5e621b3c9f76"
+			}
+		}
+	],
+	"__v": 1
+},
+{
+	"_id": {
+		"$oid": "5861f164195c5e621b3c9f6e"
+	},
+	"CommentId": "5861f164195c5e621b3c9f6d",
+	"Voters": [
+		{
+			"UserEmail": "feng",
+			"_id": {
+				"$oid": "5861f164195c5e621b3c9f6f"
+			}
+		},
+		{
+			"UserEmail": "hasan",
+			"_id": {
+				"$oid": "5861f24d195c5e621b3c9f79"
+			}
+		}
+	],
+	"__v": 1
+},
+{
+	"_id": {
+		"$oid": "5861f181195c5e621b3c9f71"
+	},
+	"CommentId": "5861f181195c5e621b3c9f70",
+	"Voters": [
+		{
+			"UserEmail": "feng",
+			"_id": {
+				"$oid": "5861f181195c5e621b3c9f72"
+			}
+		},
+		{
+			"UserEmail": "hasan",
+			"_id": {
+				"$oid": "5861f232195c5e621b3c9f78"
+			}
+		}
+	],
+	"__v": 1
+},
+{
+	"_id": {
+		"$oid": "5861f1a1195c5e621b3c9f74"
+	},
+	"CommentId": "5861f1a1195c5e621b3c9f73",
+	"Voters": [
+		{
+			"UserEmail": "feng",
+			"_id": {
+				"$oid": "5861f1a1195c5e621b3c9f75"
+			}
+		},
+		{
+			"UserEmail": "hasan",
+			"_id": {
+				"$oid": "5861f22c195c5e621b3c9f77"
+			}
+		}
+	],
+	"__v": 1
+},
+{
+	"_id": {
+		"$oid": "5861f69e195c5e621b3c9f7f"
+	},
+	"CommentId": "5861f69e195c5e621b3c9f7e",
+	"Voters": [
+		{
+			"UserEmail": "hasan",
+			"_id": {
+				"$oid": "5861f69e195c5e621b3c9f80"
+			}
+		},
+		{
+			"UserEmail": "usman",
+			"_id": {
+				"$oid": "5861f731195c5e621b3c9f89"
+			}
+		},
+		{
+			"UserEmail": "jugs",
+			"_id": {
+				"$oid": "5861f76e195c5e621b3c9f8d"
+			}
+		},
+		{
+			"UserEmail": "a",
+			"_id": {
+				"$oid": "586201251d72f4b11cf25fbc"
+			}
+		}
+	],
+	"__v": 3
+},
+{
+	"_id": {
+		"$oid": "5861f6c6195c5e621b3c9f82"
+	},
+	"CommentId": "5861f6c6195c5e621b3c9f81",
+	"Voters": [
+		{
+			"UserEmail": "hasan",
+			"_id": {
+				"$oid": "5861f6c6195c5e621b3c9f83"
+			}
+		},
+		{
+			"UserEmail": "usman",
+			"_id": {
+				"$oid": "5861f738195c5e621b3c9f8a"
+			}
+		},
+		{
+			"UserEmail": "feng",
+			"_id": {
+				"$oid": "5861f75c195c5e621b3c9f8c"
+			}
+		}
+	],
+	"__v": 2
+},
+{
+	"_id": {
+		"$oid": "5861f70a195c5e621b3c9f85"
+	},
+	"CommentId": "5861f70a195c5e621b3c9f84",
+	"Voters": [
+		{
+			"UserEmail": "hasan",
+			"_id": {
+				"$oid": "5861f70a195c5e621b3c9f86"
+			}
+		},
+		{
+			"UserEmail": "usman",
+			"_id": {
+				"$oid": "5861f73e195c5e621b3c9f8b"
+			}
+		},
+		{
+			"UserEmail": "thomas",
+			"_id": {
+				"$oid": "597fd040e81585240faa7079"
+			}
+		}
+	],
+	"__v": 2
+},
+{
+	"_id": {
+		"$oid": "5862005b1d72f4b11cf25fb7"
+	},
+	"CommentId": "5862005b1d72f4b11cf25fb6",
+	"Voters": [
+		{
+			"UserEmail": "omar",
+			"_id": {
+				"$oid": "5862005b1d72f4b11cf25fb8"
+			}
+		},
+		{
+			"UserEmail": "mexican",
+			"_id": {
+				"$oid": "586200b71d72f4b11cf25fba"
+			}
+		}
+	],
+	"__v": 1
+},
+{
+	"_id": {
+		"$oid": "59801e25d0a25e1716b3c336"
+	},
+	"CommentId": "59801e25d0a25e1716b3c335",
+	"Voters": [
+		{
+			"UserEmail": "thomas",
+			"_id": {
+				"$oid": "59801e25d0a25e1716b3c337"
+			}
+		}
+	],
+	"__v": 0
+},
+{
+	"_id": {
+		"$oid": "59f0a47d85eada33f163a185"
+	},
+	"CommentId": "59f0a47d85eada33f163a184",
+	"Voters": [
+		{
+			"UserEmail": "thomas",
+			"_id": {
+				"$oid": "59f0a47d85eada33f163a186"
+			}
+		}
+	],
+	"__v": 0
+}]
+

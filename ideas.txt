@@ -1,0 +1,8 @@
+IDEAS
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+
+Auction System :	
+	Le requêtant décide du nombre de point qu'il veut PAYER pour sa traduction
+
+Évalier qualité du upvote :
+	Tester la conformité avec les autres utilisateurs
