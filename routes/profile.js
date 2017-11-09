@@ -81,18 +81,29 @@ module.exports = function(app, passport) {
     app.post('/upload', uploading.single('picture'), function(req, res) {
         /** When using the "single"
          data come in "req.file" regardless of the attribute "name". **/
-        var tmp_path = req.file.path;
-
-        /** The original name of the uploaded file
-         stored in the variable "originalname". **/
-        var target_path = __dirname + "/../public/uploads/" + req.file.originalname;
+		if(!req.file || !req.file.path) {
+			console.log("no image selected")
+			res.redirect("/profile")
+			return
+		}
+		//extract file extension of the image
+		var fileExtRgx = /\..+$/.exec(req.file.originalname)
+		var fileExt = !!fileExtRgx ? fileExtRgx[0] : ""
+		if(!['.jpg','.png','.gif'].includes(fileExt)) {
+			console.log("invalid image type")
+			res.redirect("/profile")
+			return
+		}
+		
+		var target_path = __dirname + "/../public/uploads/" + req.user.email + fileExt
 
         user.findOne({email: req.user.email}, function (err, user) {
+			if(err) throw err;
             if (user == null) {
                 console.log("cannot find user");
             } else {
-                console.log("le file :" + req.file.originalname);
-                user.picture = req.file.originalname;
+				console.log("the file \"" + req.file.originalname + "\" has been uploaded under path : " + target_path);
+                user.picture = req.user.email + fileExt;
                 user.save(function (err, updatedObject) {
                     if (err)
                         console.log(err);
@@ -101,11 +112,11 @@ module.exports = function(app, passport) {
         });
 
         /** A better way to copy the uploaded file. **/
-        var src = fs.createReadStream(tmp_path);
+        var src = fs.createReadStream(req.file.path);
         var dest = fs.createWriteStream(target_path);
         src.pipe(dest);
         src.on('end', function() { res.redirect('/profile'); });
-        src.on('error', function(err) { res.render('/home'); });
+        src.on('error', function(err) { console.log('error on upload'); res.render('/home'); });
     });
 
 	// =====================================
