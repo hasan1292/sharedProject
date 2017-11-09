@@ -8,18 +8,24 @@
 	<style>
 		body 		{ word-wrap:break-word;}
         .row        {padding-left: 50px;}
+        .avatar         {border: rgb(105, 105, 105); border-width: 1px; border-style:solid; margin-bottom: 7px}
+        #fileButton           {background-color: #246AAD; color:white; padding: 5px; padding-right:19px; border-radius:5px; cursor:pointer;}
+        .hidden {display: none;}
 	</style>
 </head>
 <body>
 <% include partials/template/header.ejs %>
 <script>
     setActiveTab("profile")
+    $(document).ready(function(){
+        $('[data-toggle="tooltip"]').tooltip(); 
+    });
 </script>
 
 <div class="container">
 
 	<div class="page-header text-center">
-		<h1><span class="fa fa-anchor"></span> Profile Page</h1>
+		<h4><span class="fa fa-anchor"></span> Profile Page</h4>
 		<a href="/logout" class="btn btn-default btn-sm">Logout</a>
 	</div>
 
@@ -31,10 +37,13 @@
                     <h3><span class="fa fa-user"></span> Info</h3>
 
                     <div class="row">
-                        <img src="/uploads/<%= user.picture %>" height="150" width="150">
+                        <img src="/uploads/<%= user.picture %>" height="150" width="150" class="avatar">
                         <form action="/upload" method="POST" enctype="multipart/form-data">
-                            <input type="file" name="picture">
-                            <input class="btn btn-default btn-sm" type="submit" value="Upload Image">
+                            <label for="file-select" id="fileButton" class="glyphicon glyphicon-folder-open"></label>
+                            <!--hidden--><input id="file-select" class="hidden" type="file" name="picture"/>
+                            <label for="file-upload" id="fileButton" class="glyphicon glyphicon-cloud-upload"></label>
+                            <span id="fileLabel"></span>
+                            <!--hidden--><input id="file-upload" class="hidden" type="submit" value="">
                         </form>
                     </div>
 
@@ -43,11 +52,11 @@
                     <strong>Other language</strong>: <% for(i=0; i<user.otherLanguage.length && user.otherLanguage[i] !="";i++) { %>
                     <span> <%= user.otherLanguage[i] %>,&nbsp</span>
                     <% } %><br>
-                    <strong>Remaining Credits</strong>: <%= user.credits %><br>
+                    <strong data-toggle="tooltip" title="Earn credits by providing translation. Spend credits by asking for translation.">Remaining Credits</strong>: <%= user.credits %><br>
                     <strong>Score</strong>: <%= user.score_nb %><br>
                     <strong>Requested Help</strong>: <%= user.translations_nb %><br>
                     <strong>Provided Help</strong>: <%= user.reviews_nb %><br>
-                    <strong>Profile created on</strong>: <%= user.profile_creation_date %><br>
+                    <strong>Profile created on</strong>: <%= user.profile_creation_date.toLocaleString() %><br>
 
 
                 </div>
@@ -81,6 +90,12 @@
 	</div>
 
     <script>
+        $('#file-select').on('change', function() { 
+            var fileName = ''; 
+            fileName = $(this).val(); 
+            $('#fileLabel').html('  ' + fileName); 
+        })
+
         function dispInit() {
             document.getElementById("init").style.visibility = "visible"
             document.getElementById("edit").style.visibility = "hidden"

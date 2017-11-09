@@ -43,6 +43,7 @@ User.methods.validPassword = function(password) {
     return bcrypt.compareSync(password, this.password);
 };
 
+//TODO: add date to model
 var post = mongoose.Schema({
     PostCreator: String,
     PostTitle: String,

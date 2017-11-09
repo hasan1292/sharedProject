@@ -17,9 +17,7 @@
 
 <div class="container">
 
-    <div class="page-header text-left">
-        <h1><span class="fa fa-anchor"></span>Welcome <%= title %></h1>
-    </div>
+    <br/><br/>
 
 
     <% userPosts.forEach(function(item){ %>
@@ -27,13 +25,10 @@
 
 
         <div class="col-md-10 well portfolio-item">
-            <a href="#">
-                <!--<img class="img-responsive" src="http://placehold.it/700x400" alt="">-->
-            </a>
-            <h3>
+            <h4>
                 <a href="langPost/<%= item.PostDomain %>"><%= item.PostTitle %></a>
 
-            </h3>
+            </h4>
             <p><b>Post Language: </b><%= item.PostLanguage %></p>
             <p><b>Target Language: </b><%= item.TargetLanguage %></p>
             <p><b>Post Creator: </b><a href="/userProfile/<%= item.PostCreator %>"><%= item.PostCreator %></a></p>
