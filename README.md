@@ -1,7 +1,9 @@
 # fanyi-pack_final
-Community-based translation platform
+AVAILABLE ONLINE AT : http://128.199.224.137/
 
-*** IMPORTANT ******
+Community-based translation website. Each user can earn points by helping other to translate their posts. They can then use these points to ask the community to help them do translations.
+
+## How to install on server
 
 - first execute these
 npm install
@@ -12,6 +14,8 @@ npm install express-session
 	change bson = require('../build/Release/bson');
 	to bson = require('bson');
 
-*** Import mock database ***
-//How to import : mongoimport --db test --collection users mock_data.json
-//How to import : mongoimport --db test --collection userspost userspost_mock.json
+- run with "npm run-script prod"
+
+## Import mock database 
+
+Execute "./mock_user_data/create_mock_database.sh"
